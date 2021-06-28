@@ -38,7 +38,7 @@ func (rt *RandomTicker) Stop() {
 
 func (rt *RandomTicker) loop() {
 	defer close(rt.C)
-	t := time.NewTimer(rt.nextInterval())
+	t := time.NewTicker(rt.nextInterval())
 	for {
 		// either a stop signal or a timeout
 		select {
@@ -50,7 +50,7 @@ func (rt *RandomTicker) loop() {
 			select {
 			case rt.C <- time.Now():
 				t.Stop()
-				t = time.NewTimer(rt.nextInterval())
+				t = time.NewTicker(rt.nextInterval())
 			default:
 				// there could be noone receiving...
 			}

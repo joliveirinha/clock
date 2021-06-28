@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/fwojciec/clock"
+	"github.com/joliveirinha/clock"
 )
 
 func TestRandomTicker(t *testing.T) {
@@ -39,3 +39,18 @@ func TestRandomTicker(t *testing.T) {
 		t.Fatal("expected to receive close channel signal")
 	}
 }
+
+func TestRandomTickerWithSlowTask(t *testing.T) {
+
+	ticker := clock.NewRandomTicker(100*time.Millisecond, 150*time.Millisecond)
+	defer ticker.Stop()
+
+	for i := 0; i < 3; i++ {
+		<-ticker.C
+
+		if i >= 1 {
+			time.Sleep(300 * time.Millisecond)
+		}
+	}
+}
+

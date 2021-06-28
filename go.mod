@@ -1,3 +1,3 @@
-module github.com/fwojciec/clock
+module github.com/joliveirinha/clock
 
-go 1.13
+go 1.16
